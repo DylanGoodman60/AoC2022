@@ -27,16 +27,14 @@ for line in data.split("\n"):
     if 'move' in line:
         rules.append([int(s) for s in line.split() if s.isdigit()])
 
-print(rules)
 for rule in rules:
     for block in range(rule[0]):
-        if rule[0] == 1:
-            crate = info[rule[1]-1].pop()
-            info[rule[2]-1].insert(len(info[rule[2]-1])-1, crate)
-        else:
-            crate = info[rule[1]-1].pop()
-            info[rule[2]-1].append(crate)
+        pop_index = (len(info[rule[1]-1])) - (rule[0]-1) - 1 + block
+        crate = info[rule[1]-1].pop(pop_index)
+        info[rule[2]-1].append(crate)
 
 
-for crates in info:
-    print(crates[len(crates)-1], end="")
+arr = [crates.pop() for crates in info]
+for num in arr:
+    print(num, end="")
+print("\n")
