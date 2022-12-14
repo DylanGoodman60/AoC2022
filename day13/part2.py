@@ -1,3 +1,5 @@
+from functools import cmp_to_key
+
 def compare(left, right):
     for l, r in zip(left, right):
         l_is_int = isinstance(l, int)
@@ -23,11 +25,9 @@ def compare(left, right):
     return 0
 
 f = open("input.txt")
-data = [[eval(line) for line in lines.split("\n")] 
-        for lines in f.read().split("\n\n")]
+data = [eval(line) for line in f.read().replace("\n\n", "\n").split("\n")]
+data.append([[2]])
+data.append([[6]])
 
-sum = 0
-for i in range(len(data)):
-    if compare(data[i][0], data[i][1]) == 1:
-        sum += i+1
-print(sum)
+sort = sorted(data, key=cmp_to_key(compare), reverse=True)
+print((sort.index([[2]])+1) * (sort.index([[6]])+1))
